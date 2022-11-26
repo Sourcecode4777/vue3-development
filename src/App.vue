@@ -17,7 +17,7 @@
 
           <div class="weather-wrap">
             <div class="location-box">
-                <div class="location">Hamilton, New Zealand</div>
+                <div class="location">Auckalnd, New Zealand</div>
                 <div class="date">10 nov 2022</div>
             </div>
             <div class="weather-box">
@@ -44,9 +44,40 @@ export default {
         query: '',
         weather: {}
     }
-  }
+  },
 
-}
+  methods: {
+
+    fetch_weather(e) {
+      if (e.key === "Enter") {
+        fetch(`${this.url_base}weather?q=${this.query}&units=metric&APPID=${this.api_key}`)
+        .then(res => {
+              return res.json();
+              }).then(this.setResults);
+
+            }
+      
+        },
+        setResults(results) {
+          this.weather = results;
+        },
+        dataBuilder() {
+            let d = new DataTransfer();
+            let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+            let days = ["Sunday", "Saturday", "Friday", "Thursday", "Wednesday", "Tuesday", "Monday"]
+            let day = days[d.getDay()];
+            let date = d.getDate();
+            let month = months[d.getMonth()];
+            let year = d.getFullYear();
+            return `${day} ${date} ${month} ${year}`;
+
+        }
+
+      }
+    }
+
+  
+
 
 </script>
 
